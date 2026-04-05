@@ -1,0 +1,19 @@
+{
+  "name": "geo-private-backend",
+  "type": "module",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "dependencies": {
+    "circomlibjs": "^0.1.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.0.0",
+    "ioredis": "^5.0.0",
+    "joi": "^17.0.0",
+    "mongoose": "^7.0.0",
+    "rate-limit-redis": "^4.0.0",
+    "snarkjs": "^0.7.0"
+  }
+}

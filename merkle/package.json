@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "circomlibjs": "^0.1.7",
+    "dotenv": "^17.3.1"
+  }
+}

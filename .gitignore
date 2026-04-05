@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Environment secrets
+.env
+client-ui/.env
+
+# snarkjs ceremony files
+*.ptau
+*.zkey
+*_0000.zkey
+circuits/build/
+
+# Verification key (generated from zkey — do not commit)
+verification_key.json
+
+# Merkle tree output (generated)
+merkle/tree.json
+
+# React build output
+client-ui/build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# PlatformIO build cache
+esp32/.pio/
