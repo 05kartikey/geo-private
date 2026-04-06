@@ -6,7 +6,7 @@ config({ path: "../backend/.env" }); // reads CIRCUIT_LEVELS from backend .env
 // Approved H3 cells at resolution 9
 // Add your H3 cell here — find it by clicking "Verify Location" in the UI
 const cells = [
-  "89618c444a3ffff"
+  "89618c444afffff"
 ];
 
 const LEVELS = parseInt(process.env.CIRCUIT_LEVELS) || 5;
