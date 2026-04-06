@@ -175,7 +175,7 @@ export default function App() {
                   <p style={{ color: "#a78bfa", fontSize: "12px", fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "6px" }}>H3 Cell</p>
                   <p style={{ color: "#6366f1", fontFamily: "monospace", fontSize: "16px", fontWeight: 700 }}>{locationInfo.h3Index}</p>
                 </div>
-                <H3Map h3Index={locationInfo.h3Index} verified={result ? result.verified : null} />
+                <H3Map h3Index={locationInfo.h3Index} verified={result ? result.verified : null} confidence={result ? result.confidence : null} />
               </div>
             )}
 

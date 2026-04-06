@@ -1,14 +1,19 @@
 import { useEffect, useRef } from "react";
 import { cellToBoundary } from "h3-js";
 
-export default function H3Map({ h3Index, verified }) {
+export default function H3Map({ h3Index, verified, confidence }) {
   const mapRef = useRef(null);
   const instanceRef = useRef(null);
   const polygonRef = useRef(null);
 
-  const getColor = (v) => v === true ? "#10b981" : v === false ? "#ef4444" : "#6366f1";
+  const getColor = (v, c) => {
+    if (v === false) return "#ef4444";           // red — denied
+    if (v === true && c >= 0.9) return "#10b981"; // green — 100%
+    if (v === true && c >= 0.5) return "#f59e0b"; // orange — 40%
+    if (v === true) return "#fbbf24";             // yellow — 30%
+    return "#6366f1";                             // purple — pending
+  };
 
-  // Init map and draw polygon when h3Index changes
   useEffect(() => {
     if (!h3Index || !window.L) return;
 
@@ -34,7 +39,7 @@ export default function H3Map({ h3Index, verified }) {
 
     if (polygonRef.current) polygonRef.current.remove();
 
-    const color = getColor(verified);
+    const color = getColor(verified, confidence);
     polygonRef.current = window.L.polygon(boundary, {
       color,
       fillColor: color,
@@ -48,22 +53,23 @@ export default function H3Map({ h3Index, verified }) {
 
   }, [h3Index]);
 
-  // Update polygon color when verified changes — no map re-init
   useEffect(() => {
     if (!polygonRef.current) return;
-    const color = getColor(verified);
+    const color = getColor(verified, confidence);
     polygonRef.current.setStyle({ color, fillColor: color });
-  }, [verified]);
+  }, [verified, confidence]);
+
+  const color = getColor(verified, confidence);
 
   return (
-    <div style={{ position: "relative", borderRadius: "12px", overflow: "hidden", border: `1px solid ${getColor(verified)}60`, height: "360px", marginTop: "12px", transition: "border-color 0.4s ease" }}>
+    <div style={{ position: "relative", borderRadius: "12px", overflow: "hidden", border: `1px solid ${color}60`, height: "360px", marginTop: "12px", transition: "border-color 0.4s ease" }}>
       <div ref={mapRef} style={{ height: "100%", width: "100%" }} />
       <div style={{
         position: "absolute", bottom: "10px", left: "10px",
         background: "rgba(255,255,255,0.9)", backdropFilter: "blur(8px)",
-        border: `1px solid ${getColor(verified)}60`,
+        border: `1px solid ${color}60`,
         borderRadius: "8px", padding: "5px 10px",
-        fontSize: "11px", color: getColor(verified),
+        fontSize: "11px", color,
         fontFamily: "monospace", zIndex: 1000, pointerEvents: "none",
         transition: "all 0.4s ease"
       }}>
